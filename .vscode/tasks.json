@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Configure",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/k",
+                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --preset=default"
+                    ]
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/k",
+                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build"
+                    ]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Clean -> Build",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c",
+                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build --target clean && cmake --build build"
+                    ]
+                }
+            },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": ".\\build\\HelloWorld.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "test"
+        },
+        {
+            "label": "Clean -> Build -> Run",
+            "dependsOn": [
+                "Clean -> Build",    // Make sure label matches!
+                "Run"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ]
+}
