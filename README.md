@@ -3,13 +3,13 @@
 This tutorial shows how to create a C++ "Hello World" program that uses the fmt library with CMake and vcpkg.
 
 Articles:
-- [Tutorial: Install and use packages with CMake]((https://learn.microsoft.com/en-us/vcpkg/get_started/get-started))
+- [Tutorial: Install and use packages with CMake](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started)
 - [Tutorial: Install and use packages with CMake in Visual Studio](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vs)
 
 ## How to Run this?
-- Install `vcpkg`
+- Set Up `vcpkg` (Follow steps below on How to Recreate)
 
-- Install packages
+- Install any vcpkg packages
   ```bash
   # example
   vcpkg install fmt:x64-windows
@@ -25,18 +25,20 @@ Articles:
         "name": "default",
         "inherits": "vcpkg",
         "environment": {
-          "VCPKG_ROOT": "PATH_TO_YOUR_VCPKG" // "VCPKG_ROOT": "C:/vcpkg" 
+          "VCPKG_ROOT": "PATH_TO_YOUR_VCPKG" // example: "VCPKG_ROOT": "C:/vcpkg" 
         }
       }
     ]
   }
   ```
 
-### VS Code
+### Run in VS Code
 - Run Task: `Configure`
 - Run Task: `Clean -> Build -> Run`
 
-### Visual Studio 2022 as CMake Project
+> **Note:** You can check `.vscode/tasks.json` if you want to see what cmd script is being run for each task
+
+### Run in Visual Studio 2022 as CMake Project
 - Open Visual Studio 2022 > File > Open > CMake...
 - Choose `{Project Root}/CMakeLists.txt`
 - Build > Build All
@@ -89,6 +91,9 @@ Articles:
 
 ```bash
 git clone https://github.com/microsoft/vcpkg.git
+
+# optionally move to C:
+mv vcpkg C:/
 ```
 
 #### Run the bootstrap script
@@ -109,14 +114,14 @@ cd vcpkg && bootstrap-vcpkg.bat
 
 #### Configure environment variables (optional)
 
-Disclaimer: You can skip this entire step if using VSCode and had added `CMakePresets.json` and `CMakeUserPresets.json`, or are using Visual Studio and had already called `.\vcpkg.exe integrate install`
+- Disclaimer: You can skip this entire step if using VSCode and had added `CMakePresets.json` and `CMakeUserPresets.json`, or are using Visual Studio and had already called `.\vcpkg.exe integrate install`
+- Permanently add your Windows Environment Variables by adding `VCPKG_ROOT=C:\path\to\vcpkg` and `PATH=C:\path\to\vcpkg`
+- or, temporarily add to your active terminal session by calling:
 
-Add `"VCPKG_ROOT=C:\path\to\vcpkg"` to your Windows Environment Variables. or, alternatively:
-
-```bash
-set "VCPKG_ROOT=C:\path\to\vcpkg" # set "VCPKG_ROOT=C:\vcpkg"
-set PATH=%VCPKG_ROOT%;%PATH%
-```
+  ```bash
+  set "VCPKG_ROOT=C:\path\to\vcpkg" # set "VCPKG_ROOT=C:\vcpkg"
+  set PATH=%VCPKG_ROOT%;%PATH%
+  ```
 
 > **Note:** These commands only affect the current terminal session. For permanent changes, set them through Windows System Environment Variables.
 
@@ -131,11 +136,11 @@ mkdir helloworld && cd helloworld
 #### Create manifest file
 
 ```bash
-vcpkg new --application
-vcpkg add port fmt
+vcpkg new --application   # required step! will generate `vcpkg.json` and `vcpkg-configuration.json`
+vcpkg add port fmt        # optional step
 ```
 
-This creates a `vcpkg.json` file below. You can also just add said dependencies by adding manually
+This creates a `vcpkg.json` file below. You can also just **add any dependencies by adding manually to the file**
 
 ```json
 {
