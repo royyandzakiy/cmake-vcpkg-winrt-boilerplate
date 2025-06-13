@@ -1,25 +1,97 @@
 # C++ Hello World with CMake and vcpkg
 
-Main Article: https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd
-
 This tutorial shows how to create a C++ "Hello World" program that uses the fmt library with CMake and vcpkg.
 
-## Prerequisites
+Articles:
+- [Tutorial: Install and use packages with CMake]((https://learn.microsoft.com/en-us/vcpkg/get_started/get-started))
+- [Tutorial: Install and use packages with CMake in Visual Studio](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vs)
+
+## How to Run this?
+- Install `vcpkg`
+
+- Install packages
+  ```bash
+  # example
+  vcpkg install fmt:x64-windows
+  vcpkg install paho-mqttpp3:x64-windows
+  ```
+
+- Create `{Project Root}/CMakeUserPresets.json`
+  ```json
+  {
+    "version": 2,
+    "configurePresets": [
+      {
+        "name": "default",
+        "inherits": "vcpkg",
+        "environment": {
+          "VCPKG_ROOT": "PATH_TO_YOUR_VCPKG" // "VCPKG_ROOT": "C:/vcpkg" 
+        }
+      }
+    ]
+  }
+  ```
+
+### VS Code
+- Run Task: `Configure`
+- Run Task: `Clean -> Build -> Run`
+
+### Visual Studio 2022 as CMake Project
+- Open Visual Studio 2022 > File > Open > CMake...
+- Choose `{Project Root}/CMakeLists.txt`
+- Build > Build All
+- Debug > Start Debugging
+
+### Port into Visual Studio 2022 as C++ Console App
+- Create new C++ Console App project in Visual Studio 2022 (or open an existing one)
+- Add all necessary code that uses vcpkg libraries
+
+### Port into Visual Studio 2022 as C++/WinRT Component
+- Create new C++/WinRT Component project in Visual Studio 2022 (or open an existing one)
+- Add all necessary code that uses vcpkg libraries
+- Add all libraries to help Visual Studio 2022 find them
+  - Project Properties > C/C++ > General > Additional Include Libraries
+    ```bash
+    # add libs included as seperate lines
+    C:\vcpkg\installed\x64-windows\include
+    C:\vcpkg\installed\x64-windows\include\mqtt
+    ...
+    ```
+  - Project Properties > Linker > General > Additional Library Directories
+    ```bash
+    C:\vcpkg\installed\x64-windows\lib
+    ```
+  - Project Properties > Linker > Input > Additional Dependencies
+    ```
+    # add libs as seperate lines
+    C:\vcpkg\installed\x64-windows\lib\paho-mqttpp3.lib
+    C:\vcpkg\installed\x64-windows\lib\paho-mqtt3a.lib
+    C:\vcpkg\installed\x64-windows\lib\paho-mqtt3c.lib
+    ...
+    ```
+- Build > Build All
+- Debug > Start Debugging
+
+---
+
+## How to Recreate
+
+### Prerequisites
 
 - A terminal
 - A C++ compiler (MSVC for Windows users)
 - CMake
 - Git
 
-## 1. Set up vcpkg
+### 1. Set up vcpkg
 
-### Clone the repository
+#### Clone the repository
 
 ```bash
 git clone https://github.com/microsoft/vcpkg.git
 ```
 
-### Run the bootstrap script
+#### Run the bootstrap script
 
 Navigate to the vcpkg directory and run:
 
@@ -27,33 +99,43 @@ Navigate to the vcpkg directory and run:
 cd vcpkg && bootstrap-vcpkg.bat
 ```
 
-## 2. Set up the project
-
-### Configure environment variables
+#### Integrate with Visual Studio MSBuild
 
 ```bash
-set "VCPKG_ROOT=C:\path\to\vcpkg"
+.\vcpkg.exe integrate install
+```
+
+### 2. Set up the project
+
+#### Configure environment variables (optional)
+
+Disclaimer: You can skip this entire step if using VSCode and had added `CMakePresets.json` and `CMakeUserPresets.json`, or are using Visual Studio and had already called `.\vcpkg.exe integrate install`
+
+Add `"VCPKG_ROOT=C:\path\to\vcpkg"` to your Windows Environment Variables. or, alternatively:
+
+```bash
+set "VCPKG_ROOT=C:\path\to\vcpkg" # set "VCPKG_ROOT=C:\vcpkg"
 set PATH=%VCPKG_ROOT%;%PATH%
 ```
 
 > **Note:** These commands only affect the current terminal session. For permanent changes, set them through Windows System Environment Variables.
 
-### Create project directory
+#### Create project directory
 
 ```bash
 mkdir helloworld && cd helloworld
 ```
 
-## 3. Add dependencies and project files
+### 3. Add dependencies and project files
 
-### Create manifest file
+#### Create manifest file
 
 ```bash
 vcpkg new --application
 vcpkg add port fmt
 ```
 
-This creates a `vcpkg.json` file:
+This creates a `vcpkg.json` file below. You can also just add said dependencies by adding manually
 
 ```json
 {
@@ -63,33 +145,41 @@ This creates a `vcpkg.json` file:
 }
 ```
 
-### Create CMakeLists.txt
+#### Create CMakeLists.txt
 
 ```cmake
 cmake_minimum_required(VERSION 3.10)
 
 project(HelloWorld)
 
+set(CMAKE_CXX_STANDARD 17)
+
 find_package(fmt CONFIG REQUIRED)
+find_package(PahoMqttCpp CONFIG REQUIRED)
 
 add_executable(HelloWorld helloworld.cpp)
 
-target_link_libraries(HelloWorld PRIVATE fmt::fmt)
+target_link_libraries(HelloWorld
+    PRIVATE
+        fmt::fmt
+        PahoMqttCpp::paho-mqttpp3
+)
 ```
 
-### Create helloworld.cpp
+#### Include all vcpkg headers
 
 ```cpp
 #include <fmt/core.h>
+#include <mqtt/async_client.h>
+// ...
 
 int main()
 {
-    fmt::print("Hello World!\n");
-    return 0;
+    // ...
 }
 ```
 
-### Create CMake preset files
+#### Create CMake preset files
 
 **CMakePresets.json:**
 
@@ -119,7 +209,7 @@ int main()
       "name": "default",
       "inherits": "vcpkg",
       "environment": {
-        "VCPKG_ROOT": "<path to vcpkg>"
+        "VCPKG_ROOT": "<path to vcpkg>" // "VCPKG_ROOT": "C:/vcpkg"
       }
     }
   ]
@@ -128,21 +218,21 @@ int main()
 
 > **Note:** Replace `<path to vcpkg>` with your actual vcpkg installation path. Don't commit CMakeUserPresets.json to version control.
 
-## 4. Build and run
+### 4. Build and run
 
-### Configure with CMake
+#### Configure with CMake
 
 ```bash
 cmake --preset=default
 ```
 
-### Build the project
+#### Build the project
 
 ```bash
 cmake --build build
 ```
 
-### Run the application
+#### Run the application
 
 ```bash
 .\build\HelloWorld.exe
@@ -153,7 +243,7 @@ Expected output:
 Hello World!
 ```
 
-## Project Structure
+### Project Structure
 
 Your final project should look like this:
 
