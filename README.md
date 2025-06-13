@@ -7,7 +7,7 @@ Articles:
 - [Tutorial: Install and use packages with CMake in Visual Studio](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vs)
 
 ## How to Run this?
-- Set Up `vcpkg` (Follow steps below on How to Recreate)
+- [Set Up `vcpkg`](#1-set-up-vcpkg) (Follow steps below on How to Recreate)
 
 - Install any vcpkg packages
   ```bash
@@ -16,21 +16,7 @@ Articles:
   vcpkg install paho-mqttpp3:x64-windows
   ```
 
-- Create `{Project Root}/CMakeUserPresets.json`
-  ```json
-  {
-    "version": 2,
-    "configurePresets": [
-      {
-        "name": "default",
-        "inherits": "vcpkg",
-        "environment": {
-          "VCPKG_ROOT": "PATH_TO_YOUR_VCPKG" // example: "VCPKG_ROOT": "C:/vcpkg" 
-        }
-      }
-    ]
-  }
-  ```
+- [Manually create `{Project Root}/CMakeUserPresets.json`](#create-cmake-preset-files)
 
 ### Run in VS Code
 - Run Task: `Configure`
