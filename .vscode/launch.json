@@ -5,7 +5,7 @@
             "name": "Debug HelloWorld",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\HelloWorld.exe",
+            "program": "${workspaceFolder}\\build\\src\\HelloWorld.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

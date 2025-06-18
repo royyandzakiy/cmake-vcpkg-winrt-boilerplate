@@ -2,12 +2,31 @@
   "version": 2,
   "configurePresets": [
     {
-      "name": "vcpkg",
-      "generator": "Ninja",
+      "name": "msvc-vcpkg-cpp17",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+      },
+      "architecture": "x64",
+      "toolset": "host=x64",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "vcpkgEnabled": true,
+          "args": [
+            "/await"
+          ]
+        }
       }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "msvc-vcpkg-cpp17",
+      "configuration": "Debug"
     }
   ]
 }

@@ -2,33 +2,33 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Remove Build Directory",
+            "type": "shell",
+            "command": "cmd /c \"if exist build (rmdir /s /q build)\"",
+            "problemMatcher": [],
+            "group": "build",
+            "detail": "Removes the entire build directory for a completely clean state."
+        },
+        
+        // TASKS -----------------------
+        
+        {
             "label": "Configure",
             "type": "shell",
-            "command": "",
-            "options": {
-                "shell": {
-                    "executable": "cmd.exe",
-                    "args": [
-                        "/k",
-                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --preset=default"
-                    ]
-                }
-            },
+            "command": "cmd /c \"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -A x64 -DCMAKE_TOOLCHAIN_FILE=\"C:/vcpkg/scripts/buildsystems/vcpkg.cmake\"\"",
             "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "cmd /c \"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build --target clean\"",
+            "problemMatcher": [],
+            "group": "build"
         },
         {
             "label": "Build",
             "type": "shell",
-            "command": "",
-            "options": {
-                "shell": {
-                    "executable": "cmd.exe",
-                    "args": [
-                        "/k",
-                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build"
-                    ]
-                }
-            },
+            "command": "cmd /c \"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build --config Debug\"",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -40,35 +40,43 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "Clean -> Build",
-            "type": "shell",
-            "command": "",
-            "options": {
-                "shell": {
-                    "executable": "cmd.exe",
-                    "args": [
-                        "/c",
-                        "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cmake --build build --target clean && cmake --build build"
-                    ]
-                }
-            },
-            "problemMatcher": [],
-            "group": "build"
-        },
-        {
             "label": "Run",
             "type": "shell",
-            "command": ".\\build\\HelloWorld.exe",
+            "command": ".\\build\\src\\Debug\\HelloWorld.exe",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "group": "test"
         },
+
+        // COMBINATIONS -----------------------
+
+        {
+            "label": "Build -> Run",
+            "dependsOn": [
+                "Build",
+                "Run"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
         {
             "label": "Clean -> Build -> Run",
             "dependsOn": [
-                "Clean -> Build",    // Make sure label matches!
+                "Clean",
+                "Build",
+                "Run"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "Full Clean -> Configure -> Build -> Run",
+            "dependsOn": [
+                "Remove Build Directory",
+                "Configure",
+                "Build",
                 "Run"
             ],
             "dependsOrder": "sequence",

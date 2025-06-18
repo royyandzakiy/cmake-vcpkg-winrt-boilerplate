@@ -9,15 +9,12 @@ Articles:
 ## How to Run this?
 ### Preparation
 - [Set Up `vcpkg`](#1-set-up-vcpkg) (Follow steps below on How to Recreate)
-
-- Install any vcpkg packages
-  ```bash
-  # example
-  vcpkg install fmt:x64-windows
-  vcpkg install paho-mqttpp3:x64-windows
-  ```
-
 - [Manually create `CMakeUserPresets.json`](#create-cmake-preset-files) in `{Project Root}/CMakeUserPresets.json`
+- Open vcpkg or
+- Install all pre-configured packages
+  ```bash
+  vcpkg install
+  ```
 
 ### Run in VS Code
 - Run Task: `Configure`
@@ -34,30 +31,12 @@ Articles:
 ### Port into Visual Studio 2022 as C++ Console App
 - Create new C++ Console App project in Visual Studio 2022 (or open an existing one)
 - Add all necessary code that uses vcpkg libraries
+- Build > Build All
+- Debug > Start Debugging
 
 ### Port into Visual Studio 2022 as C++/WinRT Component
 - Create new C++/WinRT Component project in Visual Studio 2022 (or open an existing one)
 - Add all necessary code that uses vcpkg libraries
-- Add all libraries to help Visual Studio 2022 find them
-  - Project Properties > C/C++ > General > Additional Include Libraries
-    ```bash
-    # add libs included as seperate lines
-    C:\vcpkg\installed\x64-windows\include
-    C:\vcpkg\installed\x64-windows\include\mqtt
-    ...
-    ```
-  - Project Properties > Linker > General > Additional Library Directories
-    ```bash
-    C:\vcpkg\installed\x64-windows\lib
-    ```
-  - Project Properties > Linker > Input > Additional Dependencies
-    ```
-    # add libs as seperate lines
-    C:\vcpkg\installed\x64-windows\lib\paho-mqttpp3.lib
-    C:\vcpkg\installed\x64-windows\lib\paho-mqtt3a.lib
-    C:\vcpkg\installed\x64-windows\lib\paho-mqtt3c.lib
-    ...
-    ```
 - Build > Build All
 - Debug > Start Debugging
 
@@ -95,6 +74,13 @@ cd vcpkg && bootstrap-vcpkg.bat
 
 ```bash
 .\vcpkg.exe integrate install
+```
+
+#### Install all needed vcpkg packages
+```bash
+# example
+vcpkg install fmt:x64-windows
+vcpkg install paho-mqttpp3:x64-windows
 ```
 
 ### 2. Set up the project
