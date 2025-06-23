@@ -37,8 +37,34 @@ Articles:
 ### Port into Visual Studio 2022 as C++/WinRT Component
 - Create new C++/WinRT Component project in Visual Studio 2022 (or open an existing one)
 - Add all necessary code that uses vcpkg libraries
+- Add all libraries to help Visual Studio 2022 find them (*required, else will fail to compile)
+  - Project Properties > C/C++ > General > Additional Include Libraries
+    ```bash
+    # add libs included as seperate lines
+    C:\vcpkg\installed\x64-windows\include
+    C:\vcpkg\installed\x64-windows\include\mqtt
+    C:\vcpkg\installed\x86-windows\include
+    C:\vcpkg\installed\x86-windows\include\mqtt
+    ...
+    ```
+  - Project Properties > Linker > Input > Additional Dependencies
+    ```
+    # add libs as seperate lines
+    C:\vcpkg\installed\x64-windows\lib\paho-mqttpp3.lib
+    C:\vcpkg\installed\x64-windows\lib\paho-mqtt3a.lib
+    C:\vcpkg\installed\x86-windows\lib\paho-mqttpp3.lib
+    C:\vcpkg\installed\x86-windows\lib\paho-mqtt3a.lib
+    ...
+    ```
+  - Project Properties > Linker > General > Additional Library Directories (*optional)
+    ```bash
+    C:\vcpkg\installed\x64-windows\lib
+    C:\vcpkg\installed\x86-windows\lib
+    ```
 - Build > Build All
 - Debug > Start Debugging
+
+> **Note:** Manually adding libraries to include is Essential in the C++/WinRT environment, this differs from the CMake environment in which is already better integrated with `vcpkg` in acquiring said libary files
 
 ---
 
