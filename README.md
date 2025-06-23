@@ -45,7 +45,7 @@ Articles:
     C:\vcpkg\installed\x64-windows\include\mqtt
     C:\vcpkg\installed\x86-windows\include
     C:\vcpkg\installed\x86-windows\include\mqtt
-    ...
+    ... # add more if there are any other libraries or vcpkg packages that you included
     ```
   - Project Properties > Linker > Input > Additional Dependencies
     ```
@@ -54,7 +54,7 @@ Articles:
     C:\vcpkg\installed\x64-windows\lib\paho-mqtt3a.lib
     C:\vcpkg\installed\x86-windows\lib\paho-mqttpp3.lib
     C:\vcpkg\installed\x86-windows\lib\paho-mqtt3a.lib
-    ...
+    ... # add more if there are any other libraries or vcpkg packages that you included
     ```
   - Project Properties > Linker > General > Additional Library Directories (*optional)
     ```bash
@@ -64,7 +64,7 @@ Articles:
 - Build > Build All
 - Debug > Start Debugging
 
-> **Note:** Manually adding libraries to include is Essential in the C++/WinRT environment, this differs from the CMake environment in which is already better integrated with `vcpkg` in acquiring said libary files
+> **Note:** Manually adding libraries to include is Essential in the C++/WinRT environment, this differs from the CMake and MSBuild environment in which is already better integrated with `vcpkg` hence able to acquire said libary files automatically without explicitly stating in the properties tab
 
 ---
 
@@ -105,8 +105,9 @@ cd vcpkg && bootstrap-vcpkg.bat
 #### Install all needed vcpkg packages
 ```bash
 # example
-vcpkg install fmt:x64-windows
-vcpkg install paho-mqttpp3:x64-windows
+vcpkg install fmt:x64-windows fmt:x86-windows
+vcpkg install paho-mqtt:x86-windows paho-mqttpp3:x86-windows paho-mqttpp3[ssl]:x86-windows
+vcpkg install paho-mqtt:x64-windows paho-mqttpp3:x64-windows paho-mqttpp3[ssl]:x64-windows
 ```
 
 ### 2. Set up the project
@@ -135,8 +136,8 @@ mkdir helloworld && cd helloworld
 #### Create manifest file
 
 ```bash
-vcpkg new --application   # required step! will generate `vcpkg.json` and `vcpkg-configuration.json`
-vcpkg add port fmt        # optional step
+vcpkg new --application                   # required step! will generate `vcpkg.json` and `vcpkg-configuration.json`
+vcpkg add port fmt paho-mqttpp3 cppwinrt  # optional step
 ```
 
 This creates a `vcpkg.json` file below. You can also just **add any dependencies by adding manually to the file**
@@ -144,7 +145,9 @@ This creates a `vcpkg.json` file below. You can also just **add any dependencies
 ```json
 {
     "dependencies": [
-        "fmt"
+        "fmt",
+        "paho-mqttpp3",
+        "cppwinrt"
     ]
 }
 ```
@@ -160,13 +163,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(fmt CONFIG REQUIRED)
 find_package(PahoMqttCpp CONFIG REQUIRED)
+find_package(cppwinrt CONFIG REQUIRED)
 
 add_executable(HelloWorld helloworld.cpp)
 
 target_link_libraries(HelloWorld
     PRIVATE
+        windowsapp # REQUIRED!
         fmt::fmt
         PahoMqttCpp::paho-mqttpp3
+        Microsoft::CppWinRT
 )
 ```
 
@@ -174,6 +180,7 @@ target_link_libraries(HelloWorld
 
 ```cpp
 #include <fmt/core.h>
+#include <winrt/base.h>
 #include <mqtt/async_client.h>
 // ...
 
@@ -239,7 +246,7 @@ cmake --build build
 #### Run the application
 
 ```bash
-.\build\HelloWorld.exe
+./build/src/Debug/HelloWorld.exe
 ```
 
 Expected output:
@@ -252,12 +259,12 @@ Hello World!
 Your final project should look like this:
 
 ```
-helloworld/
-├── CMakeLists.txt
+cmake-vcpkg-boilerplate/
+├── **helloworld.cpp**
+├── **CMakeLists.txt**
+├── **vcpkg.json**
 ├── CMakePresets.json
 ├── CMakeUserPresets.json
-├── helloworld.cpp
-├── vcpkg.json
 ├── vcpkg-configuration.json (auto-generated)
 └── build/ (created during build)
 ```
