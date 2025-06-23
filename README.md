@@ -199,7 +199,7 @@ int main()
   "version": 2,
   "configurePresets": [
     {
-      "name": "vcpkg",
+      "name": "my-vcpkg-cmake-preset",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
@@ -210,6 +210,8 @@ int main()
 }
 ```
 
+> **Note:** For a more advanced `CMakePresets.json`, check out one in thsi project
+
 **CMakeUserPresets.json:**
 
 ```json
@@ -218,7 +220,7 @@ int main()
   "configurePresets": [
     {
       "name": "default",
-      "inherits": "vcpkg",
+      "inherits": "my-vcpkg-cmake-preset",
       "environment": {
         "VCPKG_ROOT": "<path to vcpkg>" // "VCPKG_ROOT": "C:/vcpkg"
       }
@@ -246,7 +248,7 @@ cmake --build build
 #### Run the application
 
 ```bash
-./build/src/Debug/HelloWorld.exe
+./build/HelloWorld.exe
 ```
 
 Expected output:
@@ -260,9 +262,9 @@ Your final project should look like this:
 
 ```
 cmake-vcpkg-boilerplate/
-├── **helloworld.cpp**
-├── **CMakeLists.txt**
-├── **vcpkg.json**
+├── helloworld.cpp
+├── CMakeLists.txt
+├── vcpkg.json
 ├── CMakePresets.json
 ├── CMakeUserPresets.json
 ├── vcpkg-configuration.json (auto-generated)
