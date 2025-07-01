@@ -1,4 +1,4 @@
-# C++ Hello World with CMake and vcpkg
+# CMake Project Template
 
 This tutorial shows how to create a C++ "Hello World" program that uses the fmt library with CMake and vcpkg.
 

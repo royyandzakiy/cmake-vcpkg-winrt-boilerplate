@@ -1,7 +1,10 @@
 {
-  "dependencies": [
-    "fmt",
-    "paho-mqttpp3",
-    "cppwinrt"
-  ]
+	"name": "vcpkgcmakepresets",
+	"version-string": "0.1.0",
+	"dependencies": [
+		"gtest",
+		"fmt",
+		"paho-mqttpp3",
+		"cppwinrt"
+	]
 }

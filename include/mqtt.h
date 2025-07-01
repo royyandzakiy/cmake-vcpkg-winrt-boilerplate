@@ -3,5 +3,4 @@
 #include <winrt/base.h>
 #include <mqtt/async_client.h>
 
-void to_print();
-void mqtt_connect();
+void run_mqtt();
