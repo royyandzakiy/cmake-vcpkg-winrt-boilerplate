@@ -15,22 +15,27 @@
 		},
 		{
 			"name": "paho-mqttpp3"
-		},
-		{
-			"name": "gtest",
-			"version>=": "1.14.0"
-		},
-		{
-			"name": "cppwinrt",
-			"platform": "windows"
 		}
 	],
 	"features": {
 		"tests": {
 			"description": "Enable unit tests using Google Test",
 			"dependencies": [
-				"gtest"
+				{
+					"name": "gtest",
+					"version>=": "1.14.0"
+				}
 			]
+		},
+		"cppwinrt-feature": {
+			"description": "Enable BLE functionality (Windows only)",
+			"dependencies": [
+				{
+					"name": "cppwinrt",
+					"platform": "windows"
+				}
+			],
+			"supports": "windows"
 		}
 	},
 	"default-features": [
