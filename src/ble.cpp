@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "../include/ble.h"
 
 void run_ble_scan()
@@ -70,3 +72,5 @@ void run_ble_scan()
 		std::cerr << "Error: " << ex.what() << std::endl;
 	}
 }
+
+#endif // _WIN32

@@ -1,20 +1,20 @@
 #include <iostream>
 #include "../include/mqtt.h"
-#include "../include/ble.h"
 
-using namespace winrt;
-using namespace Windows::Devices::Bluetooth;
-using namespace Windows::Devices::Bluetooth::Advertisement;
+#ifdef _WIN32
+#include "../include/ble.h"
+#endif
 
 int run_calc(int agc, char **argv);
 
 int main()
 {
-	init_apartment(); // Initialize WinRT
-
 	run_calc(0, nullptr);
-	run_ble_scan();
 	run_mqtt();
+
+#ifdef _WIN32
+	run_ble_scan();
+#endif
 
 	return 0;
 }
