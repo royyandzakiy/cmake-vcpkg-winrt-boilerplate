@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
 
     env:
+      GITHUB_WORKSPACE: C:\a
       VCPKG_ROOT: ${{ github.workspace }}\vcpkg
       VCPKG_DISABLE_METRICS: 1
       VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -27,7 +28,7 @@ jobs:
 
       - name: Install Windows dependencies
         run: |
-          choco install ninja doxygen.install -y --no-progress
+          choco install ninja doxygen.install python3 -y --no-progress
 
       - name: Cache vcpkg binaries
         id: vcpkg-cache
@@ -46,12 +47,13 @@ jobs:
           cd "$env:VCPKG_ROOT"
           git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
           .\bootstrap-vcpkg.bat -disableMetrics
+          .\vcpkg integrate install
 
       - name: Install dependencies
         if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
           cd "$env:VCPKG_ROOT"
-          .\vcpkg install --feature-flags=versions
+          .\vcpkg install --feature-flags=versions --debug
 
       - name: Configure and build with MSVC environment
         shell: cmd
