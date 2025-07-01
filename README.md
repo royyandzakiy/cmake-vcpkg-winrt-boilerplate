@@ -168,3 +168,7 @@ int main()
 ```
 
 > **Note:** Replace `<path to vcpkg>` with your actual vcpkg installation path. Don't commit CMakeUserPresets.json to version control.
+
+## References
+
+- (vcpkg integration with CMake projects)[https://learn.microsoft.com/en-us/vcpkg/users/buildsystems/cmake-integration]

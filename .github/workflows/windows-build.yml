@@ -66,25 +66,35 @@ jobs:
             ${{ env.VCPKG_ROOT }}/packages
           key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Clone and bootstrap vcpkg
+      - name: Clone vcpkg
         run: |
           git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
           cd "$VCPKG_ROOT"
           git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            ./bootstrap-vcpkg.bat
-          else
-            ./bootstrap-vcpkg.sh
-          fi
 
-      - name: Install dependencies
+      - name: Bootstrap vcpkg (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd "$env:VCPKG_ROOT"
+          .\bootstrap-vcpkg.bat
+
+      - name: Bootstrap vcpkg (non-Windows)
+        if: matrix.os != 'windows-latest'
         run: |
           cd "$VCPKG_ROOT"
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            ./vcpkg install --feature-flags=versions
-          else
-            ./vcpkg install --feature-flags=versions
-          fi
+          ./bootstrap-vcpkg.sh
+
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd "$env:VCPKG_ROOT"
+          .\vcpkg install --feature-flags=versions
+
+      - name: Install dependencies (non-Windows)
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd "$VCPKG_ROOT"
+          ./vcpkg install --feature-flags=versions
 
       - name: Configure and build
         run: |
