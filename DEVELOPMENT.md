@@ -10,7 +10,7 @@
 - [ ] add .clang-tidy, .clang-format & cppcheck configurations
 	- [ ] add CODING_STYLE.md
 - [ ] add advanced `.cmake` [rutura/CMakeSeries](https://github.com/rutura/CMakeSeries/tree/main/Ep034/rooster/cmake)
-	- [ ] add test coverage (gcov)
-	- [ ] add generate build success/failed in readme
 	- [ ] add version.cmake for versioning
+	- [ ] add test coverage (gcov)
+	- [ ] add generate & add build success/failed in readme
 - [ ] add more tests
