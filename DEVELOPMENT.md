@@ -1,4 +1,5 @@
 ## To Do
+- [x] add to `vcpkg.json` more verbose configurations
 - [ ] add CI script
 	- [ ] finding out if WinRT will work outside windows (linux, macOS)
 	- [ ] finding out if still requires "Developer Command Prompt Visual Studio 2022" to build
