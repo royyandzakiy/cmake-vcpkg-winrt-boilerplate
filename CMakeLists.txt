@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(vcpkg_cmakepresets LANGUAGES CXX)
+project(cmake_project_template LANGUAGES CXX)
 
 # Use VCPKG toolchain (set externally or via presets)
 if(DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+	message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
+	message(STATUS "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
 endif()
 
 # C++ settings
@@ -28,5 +30,5 @@ add_subdirectory(test)
 add_subdirectory(docs)
 
 # Final executable
-add_executable(vcpkg_proj src/main.cpp)
-target_link_libraries(vcpkg_proj PRIVATE run_calc my_mqtt my_ble)
+add_executable(cmake_project_template src/main.cpp)
+target_link_libraries(cmake_project_template PRIVATE run_calc my_mqtt my_ble)
