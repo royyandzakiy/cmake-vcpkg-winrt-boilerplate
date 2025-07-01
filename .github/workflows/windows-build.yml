@@ -44,10 +44,10 @@ jobs:
       - name: Install system dependencies
         if: matrix.os != 'windows-latest'
         run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
+          if [ "$RUNNER_OS" = "Linux" ]; then
             sudo apt-get update
             sudo apt-get install -y ninja-build doxygen
-          elif [ "$RUNNER_OS" == "macOS" ]; then
+          elif [ "$RUNNER_OS" = "macOS" ]; then
             brew update
             brew install ninja doxygen
           fi
@@ -55,9 +55,10 @@ jobs:
       - name: Install Windows dependencies
         if: matrix.os == 'windows-latest'
         run: |
-          choco install ninja doxygen.install -y
+          choco install ninja doxygen.install -y --no-progress
 
       - name: Cache vcpkg binaries
+        id: vcpkg-cache
         uses: actions/cache@v4
         with:
           path: |
@@ -66,40 +67,31 @@ jobs:
             ${{ env.VCPKG_ROOT }}/packages
           key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Clone vcpkg
+      - name: Setup vcpkg
+        if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
-          if ($env:RUNNER_OS -eq 'Windows') {
+          if [ "$RUNNER_OS" = "Windows" ]; then
             git clone https://github.com/microsoft/vcpkg.git "$env:VCPKG_ROOT"
             cd "$env:VCPKG_ROOT"
-          } else {
+            git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
+            .\bootstrap-vcpkg.bat -disableMetrics
+          else
             git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
             cd "$VCPKG_ROOT"
-          }
-          git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
+            git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
+            ./bootstrap-vcpkg.sh -disableMetrics
+          fi
 
-      - name: Bootstrap vcpkg (Windows)
-        if: matrix.os == 'windows-latest'
+      - name: Install dependencies
+        if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
-          cd "$env:VCPKG_ROOT"
-          .\bootstrap-vcpkg.bat
-
-      - name: Bootstrap vcpkg (non-Windows)
-        if: matrix.os != 'windows-latest'
-        run: |
-          cd "$VCPKG_ROOT"
-          ./bootstrap-vcpkg.sh
-
-      - name: Install dependencies (Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          cd "$env:VCPKG_ROOT"
-          .\vcpkg install --feature-flags=versions
-
-      - name: Install dependencies (non-Windows)
-        if: matrix.os != 'windows-latest'
-        run: |
-          cd "$VCPKG_ROOT"
-          ./vcpkg install --feature-flags=versions
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cd "$env:VCPKG_ROOT"
+            .\vcpkg install --feature-flags=versions
+          else
+            cd "$VCPKG_ROOT"
+            ./vcpkg install --feature-flags=versions
+          fi
 
       - name: Configure and build
         run: |
