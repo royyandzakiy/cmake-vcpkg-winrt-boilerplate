@@ -2,9 +2,9 @@ name: Windows CI Build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build-windows:
@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup MSVC Developer Command Prompt
+        uses: microsoft/setup-msbuild@v1.3.1
 
       - name: Verify Ninja version (preinstalled)
         run: ninja --version
