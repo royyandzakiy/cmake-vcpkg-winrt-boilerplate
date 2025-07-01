@@ -25,8 +25,8 @@ if(NOT DOXYGEN_FOUND)
 endif()
 
 add_custom_target(generate_docs
-    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.client
+    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Generating Client documentation"
+    COMMENT "Generating Documentation"
     VERBATIM
 )

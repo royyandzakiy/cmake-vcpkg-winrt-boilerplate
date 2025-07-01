@@ -2,8 +2,8 @@
 - [x] add to `vcpkg.json` more verbose configurations
 - [x] add CI script
 	- [x] finding out if still requires "Developer Command Prompt Visual Studio 2022" to build
-	- [ ] ensure will also build outside windows (linux, macOS)
-- [ ] add QT
+	- [x] ensure will also build outside windows (linux, macOS)
+- [x] add QT
 - [ ] add doxyfile
 	- [ ] add build sphinx docs (+ doxygen)	
 - [ ] add conan to make package manager agnostic

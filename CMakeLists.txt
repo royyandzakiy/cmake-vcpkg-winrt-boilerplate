@@ -30,6 +30,7 @@ endif()
 find_package(fmt CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 find_package(PahoMqttCpp CONFIG REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 if(ENABLE_WINDOWS_WINRT)
     find_package(cppwinrt CONFIG REQUIRED)
@@ -45,7 +46,7 @@ add_subdirectory(docs)
 
 # Final executable
 add_executable(cmake_project_template src/main.cpp)
-target_link_libraries(cmake_project_template PRIVATE run_calc my_mqtt)
+target_link_libraries(cmake_project_template PRIVATE run_calc my_mqtt my_qt)
 
 # Conditionally add BLE library on Windows
 if(ENABLE_WINDOWS_WINRT)

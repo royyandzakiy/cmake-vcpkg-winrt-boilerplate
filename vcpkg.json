@@ -1,12 +1,12 @@
 {
 	"$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
-	"name": "vcpkgcmakepresets",
+	"name": "cmake-project-template",
 	"version": "1.0",
 	"description": "A C++ project demonstrating CMake Presets and Vcpkg integration.",
-	"homepage": "https://github.com/your-username/vcpkgcmakepresets",
+	"homepage": "https://github.com/royyandzakiy/cmake-project-template",
 	"license": "MIT",
 	"maintainers": [
-		"Your Name <your.email@example.com>"
+		"Royyan <royyan.abdul@gmail.com>"
 	],
 	"dependencies": [
 		{
@@ -15,6 +15,15 @@
 		},
 		{
 			"name": "paho-mqttpp3"
+		},
+		{
+			"name": "qtbase",
+			"features": [
+				"gui",
+				"widgets"
+			],
+			"default-features": false,
+			"version>=": "6.8.3"
 		}
 	],
 	"features": {
