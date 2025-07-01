@@ -68,8 +68,13 @@ jobs:
 
       - name: Clone vcpkg
         run: |
-          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
-          cd "$VCPKG_ROOT"
+          if ($env:RUNNER_OS -eq 'Windows') {
+            git clone https://github.com/microsoft/vcpkg.git "$env:VCPKG_ROOT"
+            cd "$env:VCPKG_ROOT"
+          } else {
+            git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+            cd "$VCPKG_ROOT"
+          }
           git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
 
       - name: Bootstrap vcpkg (Windows)
