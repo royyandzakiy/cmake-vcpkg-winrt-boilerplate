@@ -12,7 +12,6 @@ target_include_directories(my_ble PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(my_ble
     PUBLIC
         fmt::fmt
-        PahoMqttCpp::paho-mqttpp3
         Microsoft::CppWinRT
         windowsapp  # Required for WinRT linker symbols
 )
