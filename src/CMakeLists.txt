@@ -16,13 +16,13 @@ target_link_libraries(my_mqtt
 )
 
 # BLE scanner using WinRT (Windows only)
-if(WIN32)
+if(ENABLE_WINDOWS_WINRT)
     add_library(my_ble ble.cpp)
     target_include_directories(my_ble PUBLIC ${CMAKE_SOURCE_DIR}/include)
     target_link_libraries(my_ble
         PUBLIC
             fmt::fmt
             Microsoft::CppWinRT
-            windowsapp  # Required for WinRT linker symbols
+            windowsapp
     )
 endif()

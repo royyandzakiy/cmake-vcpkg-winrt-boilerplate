@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.20)
 
 project(cmake_project_template LANGUAGES CXX)
 
+if(NOT DEFINED ENABLE_WINDOWS_WINRT)
+    if(WIN32)
+		set(ENABLE_WINDOWS_WINRT ON)
+    else()
+        set(ENABLE_WINDOWS_WINRT OFF)
+    endif()
+endif()
+
 # Use VCPKG toolchain (set externally or via presets)
 if(DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
@@ -23,9 +31,11 @@ find_package(fmt CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 find_package(PahoMqttCpp CONFIG REQUIRED)
 
-# Windows-specific dependencies
-if(WIN32)
+if(ENABLE_WINDOWS_WINRT)
     find_package(cppwinrt CONFIG REQUIRED)
+    message(STATUS "Building with BLE support")
+else()
+    message(STATUS "Building without BLE support")
 endif()
 
 # Add subdirectories
@@ -38,6 +48,6 @@ add_executable(cmake_project_template src/main.cpp)
 target_link_libraries(cmake_project_template PRIVATE run_calc my_mqtt)
 
 # Conditionally add BLE library on Windows
-if(WIN32)
+if(ENABLE_WINDOWS_WINRT)
     target_link_libraries(cmake_project_template PRIVATE my_ble)
 endif()

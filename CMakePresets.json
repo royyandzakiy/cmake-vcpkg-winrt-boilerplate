@@ -26,7 +26,8 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
 				"CMAKE_CXX_COMPILER": "cl",
-				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+				"ENABLE_WINDOWS_WINRT": "ON"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -44,7 +45,8 @@
 			],
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "clang++"
+				"CMAKE_CXX_COMPILER": "clang++",
+				"ENABLE_WINDOWS_WINRT": "OFF"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -60,7 +62,8 @@
 			"inherits": "base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "g++"
+				"CMAKE_CXX_COMPILER": "g++",
+				"ENABLE_WINDOWS_WINRT": "OFF"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {

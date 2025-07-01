@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _WIN32
+#ifdef ENABLE_WINDOWS_WINRT
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Devices.Bluetooth.h>
@@ -16,4 +16,4 @@ using namespace Windows::Foundation;
 
 void run_ble_scan();
 
-#endif // _WIN32
+#endif // ENABLE_WINDOWS_WINRT

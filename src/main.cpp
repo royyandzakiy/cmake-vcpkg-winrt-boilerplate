@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../include/mqtt.h"
 
-#ifdef _WIN32
+#ifdef ENABLE_WINDOWS_WINRT
 #include "../include/ble.h"
 #endif
 
@@ -12,7 +12,7 @@ int main()
 	run_calc(0, nullptr);
 	run_mqtt();
 
-#ifdef _WIN32
+#ifdef ENABLE_WINDOWS_WINRT
 	run_ble_scan();
 #endif
 
