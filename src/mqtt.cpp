@@ -3,10 +3,12 @@
 #include <chrono>
 #include <thread>
 
+#ifdef _WIN32
 namespace mqtt
 {
 	const std::string message::EMPTY_STR;
 }
+#endif // _WIN32
 
 class callback : public virtual mqtt::callback
 {
