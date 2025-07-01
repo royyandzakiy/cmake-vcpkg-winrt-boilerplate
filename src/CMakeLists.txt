@@ -15,12 +15,12 @@ target_link_libraries(my_mqtt
         PahoMqttCpp::paho-mqttpp3
 )
 
-# MQTT handler
+# QT handler
 add_library(my_qt qt.cpp)
 target_include_directories(my_qt PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(my_qt
     PUBLIC
-        Qt6::Widgets
+        Qt5::Widgets
 )
 
 # BLE scanner using WinRT (Windows only)

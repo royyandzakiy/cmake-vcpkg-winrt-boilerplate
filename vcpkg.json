@@ -14,17 +14,11 @@
 			"version>=": "10.1.1"
 		},
 		{
-			"name": "paho-mqttpp3"
+			"name": "paho-mqttpp3",
+			"version>=": "1.2.0"
 		},
-		{
-			"name": "qtbase",
-			"features": [
-				"gui",
-				"widgets"
-			],
-			"default-features": false,
-			"version>=": "6.8.3"
-		}
+		"qt5-base",
+		"qt5-tools"
 	],
 	"features": {
 		"tests": {

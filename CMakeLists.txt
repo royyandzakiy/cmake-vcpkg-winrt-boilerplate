@@ -30,7 +30,7 @@ endif()
 find_package(fmt CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 find_package(PahoMqttCpp CONFIG REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 if(ENABLE_WINDOWS_WINRT)
     find_package(cppwinrt CONFIG REQUIRED)
