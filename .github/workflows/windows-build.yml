@@ -18,8 +18,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Ninja
-        uses: ashutoshvarma/setup-ninja@v1
+      - name: Verify Ninja version (preinstalled)
+        run: ninja --version
 
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v1
@@ -35,7 +35,7 @@ jobs:
             ${{ env.VCPKG_ROOT }}\\packages
           key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Clone vcpkg
+      - name: Clone vcpkg and bootstrap
         run: |
           git clone https://github.com/microsoft/vcpkg.git "${{ env.VCPKG_ROOT }}"
           cd "${{ env.VCPKG_ROOT }}"
@@ -43,9 +43,7 @@ jobs:
           ./bootstrap-vcpkg.bat
 
       - name: Run CMake configure with preset
-        run: |
-          cmake --preset windows-base
+        run: cmake --preset windows-base
 
       - name: Build project
-        run: |
-          cmake --build --preset windows-verbose-build
+        run: cmake --build --preset windows-verbose-build
