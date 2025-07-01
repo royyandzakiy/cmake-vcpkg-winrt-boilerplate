@@ -1,4 +1,4 @@
-name: Windows CI Build
+name: CI Build
 
 on:
   push:
@@ -7,12 +7,30 @@ on:
     branches: [master]
 
 jobs:
-  build-windows:
-    name: Build on Windows
-    runs-on: windows-latest
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            vcpkg_triplet: x64-windows
+            preset: windows-base
+            build_preset: windows-verbose-build
+          - os: ubuntu-latest
+            vcpkg_triplet: x64-linux
+            preset: linux-base
+            build_preset: linux-verbose-build
+          - os: macos-latest
+            vcpkg_triplet: x64-osx
+            preset: macos-base
+            build_preset: macos-verbose-build
 
     env:
-      VCPKG_ROOT: ${{ github.workspace }}\\vcpkg
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      VCPKG_DISABLE_METRICS: 1
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
 
     steps:
       - name: Checkout code
@@ -23,28 +41,52 @@ jobs:
         with:
           cmake-version: "3.25.0"
 
-      - name: Install Doxygen
-        run: choco install doxygen.install -y
+      - name: Install system dependencies
+        if: matrix.os != 'windows-latest'
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt-get update
+            sudo apt-get install -y ninja-build doxygen
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            brew update
+            brew install ninja doxygen
+          fi
+
+      - name: Install Windows dependencies
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install ninja doxygen.install -y
 
       - name: Cache vcpkg binaries
         uses: actions/cache@v4
         with:
           path: |
-            ${{ env.VCPKG_ROOT }}\\installed
-            ${{ env.VCPKG_ROOT }}\\buildtrees
-            ${{ env.VCPKG_ROOT }}\\packages
+            ${{ env.VCPKG_ROOT }}/installed
+            ${{ env.VCPKG_ROOT }}/buildtrees
+            ${{ env.VCPKG_ROOT }}/packages
           key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Clone vcpkg and bootstrap
+      - name: Clone and bootstrap vcpkg
         run: |
-          git clone https://github.com/microsoft/vcpkg.git "${{ env.VCPKG_ROOT }}"
-          cd "${{ env.VCPKG_ROOT }}"
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          cd "$VCPKG_ROOT"
           git checkout 8f63c9ed5897d7367a92a442a79f91721e0fd38f
-          .\\bootstrap-vcpkg.bat
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            ./bootstrap-vcpkg.bat
+          else
+            ./bootstrap-vcpkg.sh
+          fi
 
-      - name: Configure and build with MSVC environment
-        shell: cmd
+      - name: Install dependencies
         run: |
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
-          cmake --preset windows-base
-          cmake --build --preset windows-verbose-build
+          cd "$VCPKG_ROOT"
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            ./vcpkg install --feature-flags=versions
+          else
+            ./vcpkg install --feature-flags=versions
+          fi
+
+      - name: Configure and build
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build --preset ${{ matrix.build_preset }}
