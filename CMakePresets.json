@@ -11,7 +11,11 @@
 			"description": "Sets generator, build and install directory, vcpkg",
 			"hidden": true,
 			"generator": "Ninja",
-			"binaryDir": "${sourceDir}/build/${presetName}"
+			"binaryDir": "${sourceDir}/build/${presetName}",
+			"cacheVariables": {
+				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+				"VCPKG_FEATURE_FLAGS": "versions"
+			}
 		},
 		{
 			"name": "windows-base",
@@ -26,8 +30,8 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
 				"CMAKE_CXX_COMPILER": "cl",
-				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-				"ENABLE_WINDOWS_WINRT": "ON"
+				"ENABLE_WINDOWS_WINRT": "ON",
+				"VCPKG_MANIFEST_FEATURES": "cppwinrt-feature"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {
