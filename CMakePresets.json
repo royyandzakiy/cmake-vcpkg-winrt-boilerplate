@@ -29,8 +29,7 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
 				"CMAKE_CXX_COMPILER": "cl",
-				"ENABLE_WINDOWS_WINRT": "ON",
-				"VCPKG_MANIFEST_FEATURES": "cppwinrt-feature"
+				"ENABLE_WINDOWS_WINRT": "ON"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {

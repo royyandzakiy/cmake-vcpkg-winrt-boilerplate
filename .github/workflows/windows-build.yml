@@ -53,7 +53,7 @@ jobs:
         if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
           cd "$env:VCPKG_ROOT"
-          .\vcpkg install --feature-flags=versions --debug
+          .\vcpkg install --feature-flags=versions --debug --x-feature=cppwinrt-feature
 
       - name: Configure and build with MSVC environment
         shell: cmd
