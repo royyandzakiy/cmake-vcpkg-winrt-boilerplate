@@ -1,6 +1,5 @@
 #include <iostream>
 #include "../include/mqtt.h"
-#include "../include/qt.h"
 
 #ifdef ENABLE_WINDOWS_WINRT
 #include "../include/ble.h"
@@ -10,7 +9,6 @@ int run_calc(int agc, char **argv);
 int main(int argc, char *argv[])
 {
 	run_calc(argc, argv);
-	run_qt(argc, argv);
 	run_mqtt();
 
 #ifdef ENABLE_WINDOWS_WINRT
