@@ -54,6 +54,7 @@ jobs:
           if [ "$RUNNER_OS" = "Linux" ]; then
             sudo apt-get update
             sudo apt-get install -y ninja-build doxygen autoconf automake libtool libltdl-dev
+            which ninja || echo "Ninja not found"
           elif [ "$RUNNER_OS" = "macOS" ]; then
             brew update
             brew install ninja doxygen autoconf automake libtool
@@ -86,6 +87,24 @@ jobs:
             ./bootstrap-vcpkg.sh -disableMetrics
           fi
 
+      - name: Verify vcpkg installation
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            if (Test-Path "$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake") {
+              echo "vcpkg toolchain file exists"
+            } else {
+              echo "vcpkg toolchain file missing"
+              exit 1
+            }
+          else
+            if [ -f "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" ]; then
+              echo "vcpkg toolchain file exists"
+            else
+              echo "vcpkg toolchain file missing"
+              exit 1
+            fi
+          fi
+
       - name: Install dependencies
         if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
@@ -96,6 +115,13 @@ jobs:
             cd "$VCPKG_ROOT"
             ./vcpkg install --feature-flags=versions
           fi
+
+      - name: Debug environment
+        run: |
+          echo "VCPKG_ROOT: $VCPKG_ROOT"
+          ls -la $VCPKG_ROOT/scripts/buildsystems/
+          which ninja
+          ninja --version
 
       - name: Configure and build
         run: |
