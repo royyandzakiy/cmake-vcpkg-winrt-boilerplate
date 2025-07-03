@@ -89,20 +89,11 @@ jobs:
 
       - name: Verify vcpkg installation
         run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then
-            if (Test-Path "$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake") {
-              echo "vcpkg toolchain file exists"
-            } else {
-              echo "vcpkg toolchain file missing"
-              exit 1
-            }
+          if [ -f "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" ]; then
+            echo "vcpkg toolchain file exists"
           else
-            if [ -f "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" ]; then
-              echo "vcpkg toolchain file exists"
-            else
-              echo "vcpkg toolchain file missing"
-              exit 1
-            fi
+            echo "vcpkg toolchain file missing"
+            exit 1
           fi
 
       - name: Install dependencies
