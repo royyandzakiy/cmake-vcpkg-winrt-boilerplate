@@ -22,13 +22,13 @@
 			"inherits": [
 				"base"
 			],
+			"generator": "Visual Studio 17 2022",
 			"architecture": {
 				"value": "x64",
 				"strategy": "external"
 			},
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "cl",
 				"ENABLE_WINDOWS_WINRT": "ON",
 				"VCPKG_MANIFEST_FEATURES": "cppwinrt-feature"
 			},

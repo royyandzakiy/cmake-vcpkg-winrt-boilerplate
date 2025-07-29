@@ -44,10 +44,10 @@ add_subdirectory(test)
 add_subdirectory(docs)
 
 # Final executable
-add_executable(cmake_project_template src/main.cpp)
-target_link_libraries(cmake_project_template PRIVATE run_calc my_mqtt)
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE run_calc my_mqtt)
 
 # Conditionally add BLE library on Windows
 if(ENABLE_WINDOWS_WINRT)
-    target_link_libraries(cmake_project_template PRIVATE my_ble)
+    target_link_libraries(${PROJECT_NAME} PRIVATE my_ble)
 endif()
