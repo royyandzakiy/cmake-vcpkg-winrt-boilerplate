@@ -106,8 +106,10 @@
 			"description": "Passes -v to Ninja",
 			"configurePreset": "windows-base",
 			"inherits": "core-build",
+			"configuration": "Debug",
+			"verbose": true,
 			"nativeToolOptions": [
-				"-v"
+				"-verbosity:normal"
 			]
 		},
 		{
