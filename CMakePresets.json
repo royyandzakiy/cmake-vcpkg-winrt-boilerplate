@@ -29,7 +29,6 @@
 			},
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "cl",
 				"ENABLE_WINDOWS_WINRT": "ON",
 				"VCPKG_MANIFEST_FEATURES": "cppwinrt-feature"
 			},
