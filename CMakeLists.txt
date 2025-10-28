@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.20)
 
 project(cmake_project_template LANGUAGES CXX)
 
+if(WIN32)
+    include(cmake/setup-windows.cmake)
+endif()
+
 if(NOT DEFINED ENABLE_WINDOWS_WINRT)
     if(WIN32)
 		set(ENABLE_WINDOWS_WINRT ON)
