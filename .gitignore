@@ -30,7 +30,6 @@ vcpkg-manifest-install.log
 vcpkg_installed/
 
 ### VisualStudioCode ###
-.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
