@@ -15,8 +15,15 @@ target_link_libraries(my_mqtt
         PahoMqttCpp::paho-mqttpp3
 )
 
+# COM Ports lister (Windows only)
+if(WIN32)
+    add_library(my_com_ports com_ports.cpp)
+    target_include_directories(my_com_ports PUBLIC ${CMAKE_SOURCE_DIR}/include)
+endif()
+
 # BLE scanner using WinRT (Windows only)
 if(ENABLE_WINDOWS_WINRT)
+    message(STATUS "ENABLE_WINDOWS_WINRT preprocessor macro defined")
     add_library(my_ble ble.cpp)
     target_include_directories(my_ble PUBLIC ${CMAKE_SOURCE_DIR}/include)
     target_link_libraries(my_ble
