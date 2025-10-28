@@ -1,15 +1,29 @@
-## To Do
-- [ ] add .clang-tidy, .clang-format & cppcheck configurations
+## To Do cmake-vcpkg-winrt
+- essentials
+	- [ ] add windows.h com port listing
+	- [ ] add gtest unit testing
+	- [ ] add system testing pytest
+ - static analyze
+	- [ ] add clang format
+	- [ ] add clang tidy
+	- [ ] add cppcheck configurations
+	- [ ] add sanitizers
+	- [ ] add CODING_STYLE.md
+- [ ] add coverage
 	- dive deeper into [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
-- [ ] add CODING_STYLE.md
 - [ ] add doxyfile
 	- [ ] add build sphinx docs (+ doxygen)	
-- [ ] add conan to make package manager agnostic
 - [ ] add advanced `.cmake` [rutura/CMakeSeries](https://github.com/rutura/CMakeSeries/tree/main/Ep034/rooster/cmake)
 	- [ ] add version.cmake for versioning
 	- [ ] add test coverage (gcov)
 	- [ ] add generate & add build success/failed in readme
-- [ ] add more tests
+
+## To Do cmake-conan
+- [ ] add conan as package manager
+- [ ] add .devcontainer
+	- [ ] add setup.cmake
+- [ ] add sphynx docs generation
+- [ ] add fuzztest
 
 ## Done
 - [x] add to `vcpkg.json` more verbose configurations
