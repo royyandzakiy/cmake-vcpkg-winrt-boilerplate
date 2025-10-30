@@ -1,18 +1,14 @@
 {
 	"$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
 	"name": "cmake-project-template",
-	"version": "1.0",
-	"description": "A C++ project demonstrating CMake Presets and Vcpkg integration.",
+	"version": "1.0.0",
+	"description": "A C++ project demonstrating CMake Presets and Vcpkg integration",
 	"homepage": "https://github.com/royyandzakiy/cmake-project-template",
 	"license": "MIT",
 	"maintainers": [
 		"Royyan <royyan.abdul@gmail.com>"
 	],
 	"dependencies": [
-		{
-			"name": "fmt",
-			"version>=": "10.1.1"
-		},
 		{
 			"name": "paho-mqttpp3",
 			"version>=": "1.2.0"
@@ -28,8 +24,8 @@
 				}
 			]
 		},
-		"cppwinrt-feature": {
-			"description": "Enable BLE functionality (Windows only)",
+		"cppwinrt": {
+			"description": "Enable BLE functionality with C++/WinRT",
 			"dependencies": [
 				{
 					"name": "cppwinrt",
@@ -40,13 +36,8 @@
 		}
 	},
 	"default-features": [
-		"tests"
+		"tests",
+		"cppwinrt"
 	],
-	"builtin-baseline": "8f63c9ed5897d7367a92a442a79f91721e0fd38f",
-	"overrides": [
-		{
-			"name": "fmt",
-			"version": "10.1.1"
-		}
-	]
+	"builtin-baseline": "8f63c9ed5897d7367a92a442a79f91721e0fd38f"
 }

@@ -7,30 +7,18 @@
 	},
 	"configurePresets": [
 		{
-			"name": "base",
-			"description": "Sets generator, build and install directory, vcpkg",
-			"hidden": true,
-			"generator": "Ninja",
-			"binaryDir": "${sourceDir}/build/${presetName}",
-			"cacheVariables": {
-				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-			}
-		},
-		{
 			"name": "windows-base",
-			"description": "Sets x64 arch, compilers, build type",
-			"inherits": [
-				"base"
-			],
+			"description": "Windows development configuration with Visual Studio 2022",
 			"generator": "Visual Studio 17 2022",
+			"binaryDir": "${sourceDir}/build/${presetName}",
 			"architecture": {
 				"value": "x64",
 				"strategy": "external"
 			},
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"ENABLE_WINDOWS_WINRT": "ON",
-				"VCPKG_MANIFEST_FEATURES": "cppwinrt-feature"
+				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+				"ENABLE_WINDOWS_WINRT": "ON"
 			},
 			"vendor": {
 				"microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -41,133 +29,48 @@
 			}
 		},
 		{
-			"name": "macos-base",
-			"description": "Sets compilers, build type",
-			"inherits": [
-				"base"
-			],
+			"name": "windows-release",
+			"description": "Windows release build with optimizations",
+			"inherits": "windows-base",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "clang++",
-				"ENABLE_WINDOWS_WINRT": "OFF"
-			},
-			"vendor": {
-				"microsoft.com/VisualStudioSettings/CMake/1.0": {
-					"hostOS": [
-						"macOS"
-					]
-				}
-			}
-		},
-		{
-			"name": "linux-base",
-			"description": "Sets compilers, build type",
-			"inherits": "base",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_COMPILER": "g++",
-				"ENABLE_WINDOWS_WINRT": "OFF"
-			},
-			"vendor": {
-				"microsoft.com/VisualStudioSettings/CMake/1.0": {
-					"hostOS": [
-						"Linux"
-					]
-				}
-			}
-		},
-		{
-			"name": "linux-warnings",
-			"description": "Enables dev warnings (-wdev)",
-			"inherits": "linux-base",
-			"warnings": {
-				"dev": true
+				"CMAKE_BUILD_TYPE": "Release"
 			}
 		}
 	],
 	"buildPresets": [
 		{
-			"name": "core-build",
-			"description": "Inherits environment from base configurePreset",
-			"configurePreset": "base",
-			"hidden": true,
-			"inheritConfigureEnvironment": true
+			"name": "windows-debug",
+			"description": "Build Windows debug configuration",
+			"configurePreset": "windows-base",
+			"configuration": "Debug"
+		},
+		{
+			"name": "windows-release",
+			"description": "Build Windows release configuration",
+			"configurePreset": "windows-release",
+			"configuration": "Release"
 		},
 		{
 			"name": "windows-clean-build",
-			"description": "Clean before build (--clean-first)",
+			"description": "Clean rebuild for Windows",
 			"configurePreset": "windows-base",
-			"inherits": "core-build",
 			"cleanFirst": true
 		},
 		{
-			"name": "windows-verbose-build",
-			"description": "Passes -v to Ninja",
+			"name": "windows-verbose",
+			"description": "Verbose build output for debugging",
 			"configurePreset": "windows-base",
-			"inherits": "core-build",
-			"configuration": "Debug",
-			"verbose": true,
-			"nativeToolOptions": [
-				"-verbosity:normal"
-			]
-		},
-		{
-			"name": "macos-clean-build",
-			"description": "Clean before build (--clean-first)",
-			"configurePreset": "macos-base",
-			"inherits": "core-build",
-			"cleanFirst": true
-		},
-		{
-			"name": "macos-verbose-build",
-			"description": "Passes -v to Ninja",
-			"configurePreset": "macos-base",
-			"inherits": "core-build",
-			"nativeToolOptions": [
-				"-v"
-			]
-		},
-		{
-			"name": "linux-clean-build",
-			"description": "Clean before build (--clean-first)",
-			"configurePreset": "linux-base",
-			"inherits": "core-build",
-			"cleanFirst": true
-		},
-		{
-			"name": "linux-verbose-build",
-			"description": "Passes -v to Ninja",
-			"configurePreset": "linux-base",
-			"inherits": "core-build",
-			"nativeToolOptions": [
-				"-v"
-			]
+			"verbose": true
 		}
 	],
 	"testPresets": [
 		{
-			"name": "core-test",
-			"description": "Enable output on failure",
-			"configurePreset": "base",
-			"hidden": false,
+			"name": "windows-test",
+			"description": "Run tests on Windows",
+			"configurePreset": "windows-base",
 			"output": {
 				"outputOnFailure": true
 			}
-		},
-		{
-			"name": "macos-core-test",
-			"configurePreset": "macos-base",
-			"inherits": "core-test"
-		},
-		{
-			"name": "windows-core-test",
-			"configurePreset": "windows-base",
-			"inherits": "core-test"
-		},
-		{
-			"name": "linux-core-test",
-			"configurePreset": "linux-base",
-			"inherits": "core-test"
 		}
 	]
 }
