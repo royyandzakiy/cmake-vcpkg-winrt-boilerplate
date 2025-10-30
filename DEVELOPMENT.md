@@ -6,7 +6,11 @@
    - [ ] system testing pytest (in development in the pytest repo)
    - [ ] use msvc, use cpp23 import std & new custom module
 - backlog
-   - empty
+   - [ ] add doxygen to cmake
+
+## To Do cmake-conan
+- [ ] add conan as package manager
+- [ ] add .devcontainer
 
 ## Future developments
 - static analyzers
@@ -16,6 +20,7 @@
    - [ ] add CODING_STYLE.md
    - [ ] add coverage
       - dive deeper into [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
+- add fuzz testing
 - documentation
    - [ ] add doxyfile
       - [ ] add build sphinx docs (+ doxygen)	
@@ -23,13 +28,6 @@
    - [ ] add advanced `.cmake` [rutura/CMakeSeries](https://github.com/rutura/CMakeSeries/tree/main/Ep034/rooster/cmake)
       - [ ] add version.cmake for versioning
       - [ ] add generate & add build success/failed in readme
-
-## To Do cmake-conan
-- [ ] add conan as package manager
-- [ ] add .devcontainer
-- [ ] add setup.cmake
-- [ ] add sphynx docs generation
-- [ ] add fuzztest
 
 ## Done
 - [x] add clang format
