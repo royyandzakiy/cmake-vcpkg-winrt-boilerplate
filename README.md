@@ -48,15 +48,9 @@ Create `CMakeUserPresets.json` in the project root:
 }
 ```
 
-### 3. Install Dependencies
-```bash
-cd C:/vcpkg
-vcpkg install
-```
-
-### 4. Build and Run
+### 3. Build and Run
 **Using Visual Studio Code:**
-- Run Task: `Configure Project`
+- Run Task: `Configure Project` - This automatically installs and sets up all dependencies
 - Run Task: `Build Project` 
 - Run Task: `Run Application`
 
@@ -66,6 +60,15 @@ cmake --preset default
 cmake --build build/default
 ./build/default/cmake-project-template
 ```
+
+**What Happens During Configuration:**
+
+When you run Configure Project, the CMake setup script automatically:
+
+1. Checks for required tools (Git, Doxygen, vcpkg)
+2. Installs missing dependencies if needed
+3. Sets up vcpkg with all project dependencies
+4. Configures the build system with proper toolchain
 
 ## Project Structure
 
