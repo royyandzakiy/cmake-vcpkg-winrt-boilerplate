@@ -6,6 +6,7 @@
    - [ ] system testing pytest (in development in the pytest repo)
    - [ ] use msvc, use cpp23 import std & new custom module
 - backlog
+   - clone & learn from https://github.com/filipdutescu/modern-cpp-template
    - [ ] add doxygen to cmake
 
 ## To Do cmake-conan
