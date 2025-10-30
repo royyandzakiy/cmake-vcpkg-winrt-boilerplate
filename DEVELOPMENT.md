@@ -1,8 +1,10 @@
 ## To Do cmake-vcpkg-winrt
 - essentials
- - [ ] convert all to cpp23
- - [ ] refactor classes & functions
-	- [ ] add system testing pytest (in development in the pytest repo)
+   - [ ] convert all to cpp23
+   - [ ] refactor classes & functions
+- poc
+   - [ ] system testing pytest (in development in the pytest repo)
+   - [ ] cpp23 import std & new custom module
 - nice to haves
 	- [ ] add clang format
 	- [ ] add clang tidy
@@ -18,7 +20,6 @@
 	- [ ] add generate & add build success/failed in readme
 
 ## To Do cmake-conan
-- [ ] create poc to use import
 - [ ] add conan as package manager
 - [ ] add .devcontainer
 	- [ ] add setup.cmake
