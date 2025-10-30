@@ -1,14 +1,16 @@
-add_executable(
-    unit_tests
+# =============================================================================
+# Test Configuration
+# =============================================================================
+add_executable(unit_tests
     test_calc.cpp
     test_run_calc.cpp
 )
-target_link_libraries(unit_tests PRIVATE 
-    run_calc 
-    GTest::gtest 
-    GTest::gtest_main
-    # GTest::gmock 
-    # GTest::gmock_main
+
+target_link_libraries(unit_tests
+    PRIVATE 
+        run_calc 
+        GTest::gtest 
+        GTest::gtest_main
 )
 
 include(GoogleTest)
