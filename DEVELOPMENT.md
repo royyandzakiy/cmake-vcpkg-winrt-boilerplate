@@ -29,6 +29,7 @@
    - [ ] add advanced `.cmake` [rutura/CMakeSeries](https://github.com/rutura/CMakeSeries/tree/main/Ep034/rooster/cmake)
       - [ ] add version.cmake for versioning
       - [ ] add generate & add build success/failed in readme
+      - refactor with modern cmake https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/
 
 ## Done
 - [x] add clang format
