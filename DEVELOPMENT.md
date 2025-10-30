@@ -18,6 +18,7 @@
 	- [ ] add generate & add build success/failed in readme
 
 ## To Do cmake-conan
+- [ ] create poc to use import
 - [ ] add conan as package manager
 - [ ] add .devcontainer
 	- [ ] add setup.cmake
