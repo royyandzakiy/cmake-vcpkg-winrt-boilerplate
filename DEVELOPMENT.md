@@ -1,6 +1,6 @@
 ## To Do cmake-vcpkg-winrt
 - essentials
-   - [ ] convert all to cpp23
+   - [ ] convert all to cpp23 (print)
    - [ ] refactor classes & functions
 - poc
    - [ ] system testing pytest (in development in the pytest repo)
