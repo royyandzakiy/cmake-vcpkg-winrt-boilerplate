@@ -17,6 +17,8 @@
 ## Future developments
 - static analyzers
    - [ ] add clang tidy
+      - https://www.kdab.com/clang-tidy-part-1-modernize-source-code-using-c11c14/
+      - https://devblogs.microsoft.com/cppblog/visual-studio-code-c-december-2021-update-clang-tidy/
    - [ ] add cppcheck configurations
    - [ ] add sanitizer
    - [ ] add CODING_STYLE.md
