@@ -5,7 +5,10 @@
 - poc
    - [ ] system testing pytest (in development in the pytest repo)
    - [ ] use msvc, use cpp23 import std & new custom module
-- nice to haves
+- backlog
+   - empty
+
+## Future developments
    - static analyzers
       - [ ] add clang tidy
       - [ ] add cppcheck configurations
@@ -22,7 +25,7 @@
 ## To Do cmake-conan
 - [ ] add conan as package manager
 - [ ] add .devcontainer
-	- [ ] add setup.cmake
+- [ ] add setup.cmake
 - [ ] add sphynx docs generation
 - [ ] add fuzztest
 
