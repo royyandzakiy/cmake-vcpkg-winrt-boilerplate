@@ -4,7 +4,7 @@
    - [ ] refactor classes & functions
 - poc
    - [ ] system testing pytest (in development in the pytest repo)
-   - [ ] cpp23 import std & new custom module
+   - [ ] use msvc, use cpp23 import std & new custom module
 - nice to haves
 	- [ ] add clang format
 	- [ ] add clang tidy
