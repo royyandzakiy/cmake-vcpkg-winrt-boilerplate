@@ -18,19 +18,19 @@ endif()
 # Configure Windows WinRT support
 if(NOT DEFINED ENABLE_WINDOWS_WINRT)
     set(ENABLE_WINDOWS_WINRT ${WIN32})
-else()
-    message(STATUS "ENABLE_WINDOWS_WINRT defined externally: ${ENABLE_WINDOWS_WINRT}")
 endif()
 
-message(STATUS "Final ENABLE_WINDOWS_WINRT: ${ENABLE_WINDOWS_WINRT}")
-message(STATUS "Target platform - WIN32: ${WIN32}")
+message(STATUS "Windows WinRT support: ${ENABLE_WINDOWS_WINRT}")
 
 # =============================================================================
 # Toolchain Configuration
 # =============================================================================
-# Use VCPKG toolchain (set externally or via presets)
-if(DEFINED ENV{VCPKG_ROOT})
+# Use VCPKG toolchain (setup-windows.cmake should set this, but fallback if needed)
+if(NOT CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+
+if(CMAKE_TOOLCHAIN_FILE)
     message(STATUS "Using VCPKG toolchain: ${CMAKE_TOOLCHAIN_FILE}")
 endif()
 
