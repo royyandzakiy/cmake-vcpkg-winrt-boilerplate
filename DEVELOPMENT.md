@@ -9,15 +9,17 @@
    - empty
 
 ## Future developments
-   - static analyzers
-      - [ ] add clang tidy
-      - [ ] add cppcheck configurations
-      - [ ] add sanitizer
-      - [ ] add CODING_STYLE.md
-      - [ ] add coverage
-         - dive deeper into [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
+- static analyzers
+   - [ ] add clang tidy
+   - [ ] add cppcheck configurations
+   - [ ] add sanitizer
+   - [ ] add CODING_STYLE.md
+   - [ ] add coverage
+      - dive deeper into [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
+- documentation
    - [ ] add doxyfile
       - [ ] add build sphinx docs (+ doxygen)	
+- setups
    - [ ] add advanced `.cmake` [rutura/CMakeSeries](https://github.com/rutura/CMakeSeries/tree/main/Ep034/rooster/cmake)
       - [ ] add version.cmake for versioning
       - [ ] add generate & add build success/failed in readme
