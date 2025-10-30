@@ -1,76 +1,82 @@
 #ifdef ENABLE_WINDOWS_WINRT
 
 #include "../include/ble.h"
+#include <print>
+#include <thread>
 
 void run_ble_scan()
 {
-	try
-	{
-		winrt::init_apartment();
+    try
+    {
+        winrt::init_apartment();
 
-		std::cout << "Starting BLE scan (will run for 3 seconds)..." << std::endl;
+        std::print("Starting BLE scan (will run for 3 seconds)...\n");
 
-		BluetoothLEAdvertisementWatcher watcher;
-		std::promise<void> scanCompletedPromise;
-		auto scanCompletedFuture = scanCompletedPromise.get_future();
+        BluetoothLEAdvertisementWatcher watcher;
+        std::promise<void> scan_completed_promise;
+        auto scan_completed_future = scan_completed_promise.get_future();
 
-		watcher.ScanningMode(BluetoothLEScanningMode::Active);
+        watcher.ScanningMode(BluetoothLEScanningMode::Active);
 
-		watcher.Received([&](const auto &sender, const BluetoothLEAdvertisementReceivedEventArgs &args)
-						 {
-            std::cout << "\nBLE Device Found:" << std::endl;
-            std::cout << "  Address: " << std::hex << args.BluetoothAddress() << std::dec << std::endl;
-            std::cout << "  RSSI: " << args.RawSignalStrengthInDBm() << " dBm" << std::endl;
+        watcher.Received([&](const auto& /*sender*/, const BluetoothLEAdvertisementReceivedEventArgs& args)
+        {
+            std::print("\nBLE Device Found:\n");
+            std::print("  Address: {:016X}\n", args.BluetoothAddress());
+            std::print("  RSSI: {} dBm\n", args.RawSignalStrengthInDBm());
 
             auto advertisement = args.Advertisement();
             if (!advertisement.LocalName().empty())
             {
-                std::cout << "  Name: " << winrt::to_string(advertisement.LocalName()) << std::endl;
+                std::print("  Name: {}\n", winrt::to_string(advertisement.LocalName()));
             }
             else
             {
-                auto getDeviceName = [args]() -> winrt::fire_and_forget {
+                auto get_device_name = [args]() -> winrt::fire_and_forget 
+                {
                     try
                     {
                         auto device = co_await BluetoothLEDevice::FromBluetoothAddressAsync(args.BluetoothAddress());
                         if (device != nullptr && !device.Name().empty())
                         {
-                            std::cout << "  Name: " << winrt::to_string(device.Name()) << std::endl;
+                            std::print("  Name: {}\n", winrt::to_string(device.Name()));
                         }
                     }
                     catch (...) {} // Ignore errors in async name fetching
                 };
-                getDeviceName();
-            } });
+                get_device_name();
+            }
+        });
 
-		watcher.Stopped([&](const auto &sender, const BluetoothLEAdvertisementWatcherStoppedEventArgs &args)
-						{
-            std::cout << "BLE scan stopped. Reason: " << static_cast<int>(args.Error()) << std::endl;
-            scanCompletedPromise.set_value(); });
+        watcher.Stopped([&](const auto& /*sender*/, const BluetoothLEAdvertisementWatcherStoppedEventArgs& args)
+        {
+            std::print("BLE scan stopped. Reason: {}\n", static_cast<int>(args.Error()));
+            scan_completed_promise.set_value();
+        });
 
-		watcher.Start();
-		std::cout << "BLE scan started..." << std::endl;
+        watcher.Start();
+        std::print("BLE scan started...\n");
 
-		// Set up a timer to stop after 3 seconds
-		std::thread([&watcher, &scanCompletedPromise]()
-					{
+        // Set up a timer to stop after 3 seconds
+        std::jthread stop_timer([&watcher, &scan_completed_promise]
+        {
             std::this_thread::sleep_for(std::chrono::seconds(3));
-            if (watcher.Status() == BluetoothLEAdvertisementWatcherStatus::Started) {
+            if (watcher.Status() == BluetoothLEAdvertisementWatcherStatus::Started) 
+            {
                 watcher.Stop();
-            } })
-			.detach();
+            }
+        });
 
-		scanCompletedFuture.wait();
-		std::cout << "BLE scan completed after 3 seconds." << std::endl;
-	}
-	catch (const winrt::hresult_error &ex)
-	{
-		std::cerr << "BLE scan error: " << winrt::to_string(ex.message()) << std::endl;
-	}
-	catch (const std::exception &ex)
-	{
-		std::cerr << "Error: " << ex.what() << std::endl;
-	}
+        scan_completed_future.wait();
+        std::print("BLE scan completed after 3 seconds.\n");
+    }
+    catch (const winrt::hresult_error& ex)
+    {
+        std::println(stderr, "BLE scan error: {}", winrt::to_string(ex.message()));
+    }
+    catch (const std::exception& ex)
+    {
+        std::println(stderr, "Error: {}", ex.what());
+    }
 }
 
 #endif // ENABLE_WINDOWS_WINRT

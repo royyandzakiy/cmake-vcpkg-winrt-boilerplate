@@ -17,7 +17,7 @@ target_link_libraries(my_mqtt
 
 # COM Ports lister (Windows only)
 if(WIN32)
-    add_library(my_com_ports com_ports.cpp)
+    add_library(my_com_ports ports.cpp)
     target_include_directories(my_com_ports PUBLIC ${CMAKE_SOURCE_DIR}/include)
 endif()
 
