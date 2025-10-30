@@ -8,6 +8,7 @@
 - backlog
    - clone & learn from https://github.com/filipdutescu/modern-cpp-template
    - [ ] add doxygen to cmake
+   - try developing via CLion
 
 ## To Do cmake-conan
 - [ ] add conan as package manager
@@ -20,7 +21,6 @@
    - [ ] add sanitizer
    - [ ] add CODING_STYLE.md
    - [ ] add coverage
-      - dive deeper into [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
 - add fuzz testing
 - documentation
    - [ ] add doxyfile
