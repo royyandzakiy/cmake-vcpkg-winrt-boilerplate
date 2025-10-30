@@ -1,7 +1,5 @@
 ## To Do cmake-vcpkg-winrt
 - essentials
-	- [ ] add windows.h com port listing
-	- [ ] add gtest unit testing
 	- [ ] add system testing pytest
  - static analyze
 	- [ ] add clang format
@@ -26,6 +24,8 @@
 - [ ] add fuzztest
 
 ## Done
+- [x] add windows.h com port listing
+- [x] add gtest unit testing
 - [x] add to `vcpkg.json` more verbose configurations
 - [x] add CI script
 	- [x] finding out if still requires "Developer Command Prompt Visual Studio 2022" to build

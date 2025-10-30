@@ -48,10 +48,20 @@ else()
     message(STATUS "Building without BLE support")
 endif()
 
+# Find Python for testing - do this BEFORE add_subdirectory(test)
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_Interpreter_FOUND)
+    message(STATUS "Python found: ${Python3_EXECUTABLE}")
+    set(ENABLE_PYTHON_TESTS ON CACHE BOOL "Enable Python system tests")
+else()
+    message(STATUS "Python not found, disabling Python system tests")
+    set(ENABLE_PYTHON_TESTS OFF)
+endif()
+
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(docs)
+# add_subdirectory(docs)  # Comment out if docs doesn't exist
 
 # Final executable
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -65,4 +75,16 @@ endif()
 # Conditionally add BLE library on Windows
 if(ENABLE_WINDOWS_WINRT)
     target_link_libraries(${PROJECT_NAME} PRIVATE my_ble)
+endif()
+
+# Add custom target for Python system tests
+if(ENABLE_PYTHON_TESTS)
+    add_custom_target(python_tests
+        COMMAND ${Python3_EXECUTABLE} -m pytest ${CMAKE_SOURCE_DIR}/test/python -v
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Running Python system tests with pytest"
+    )
+    
+    # Make python_tests depend on the main executable
+    add_dependencies(python_tests ${PROJECT_NAME})
 endif()

@@ -13,7 +13,8 @@
 			"generator": "Ninja",
 			"binaryDir": "${sourceDir}/build/${presetName}",
 			"cacheVariables": {
-				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+				"ENABLE_PYTHON_TESTS": "ON"
 			}
 		},
 		{
@@ -152,6 +153,10 @@
 			"hidden": false,
 			"output": {
 				"outputOnFailure": true
+			},
+			"execution": {
+				"noTestsAction": "error",
+				"stopOnFailure": false
 			}
 		},
 		{
@@ -168,6 +173,20 @@
 			"name": "linux-core-test",
 			"configurePreset": "linux-base",
 			"inherits": "core-test"
+		},
+		{
+			"name": "system-test-only",
+			"description": "Run only system tests",
+			"configurePreset": "base",
+			"hidden": false,
+			"output": {
+				"outputOnFailure": true
+			}
+		},
+		{
+			"name": "windows-system-test",
+			"configurePreset": "windows-base",
+			"inherits": "system-test-only"
 		}
 	]
 }
