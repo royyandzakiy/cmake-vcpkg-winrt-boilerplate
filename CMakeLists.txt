@@ -18,7 +18,7 @@ endif()
 # =============================================================================
 # WinRT Configuration (OPTIONAL - Easy to remove completely)
 # =============================================================================
-option(ENABLE_WINDOWS_WINRT "Enable Windows WinRT support" OFF) # change this to use WinRT
+option(ENABLE_WINDOWS_WINRT "Enable Windows WinRT support" ON) # Optional: Turn OFF if not using WinRT (or remove)
 message(STATUS "Windows WinRT support: ${ENABLE_WINDOWS_WINRT}")
 
 if(ENABLE_WINDOWS_WINRT)
@@ -44,6 +44,12 @@ endif()
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Optional: Enable Clang-Tidy if defined
+if(CLANGTIDY)
+    set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY})
+    message(STATUS "Clang-Tidy enabled: ${CLANGTIDY}")
+endif()
 
 # =============================================================================
 # Dependencies
@@ -77,7 +83,7 @@ if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE my_com_ports)
 endif()
 
-# OPTIONAL: WinRT dependencies (easy to remove)
+# OPTIONAL: WinRT dependencies (remove if not using WinRT)
 if(ENABLE_WINDOWS_WINRT)
     target_link_libraries(${PROJECT_NAME} PRIVATE my_ble)
 endif()
