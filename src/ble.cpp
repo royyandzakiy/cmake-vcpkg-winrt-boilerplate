@@ -1,4 +1,4 @@
-#ifdef ENABLE_WINDOWS_WINRT
+#ifdef WINDOWS_WINRT_ENABLED
 
 #include "../include/ble.h"
 #include <print>
@@ -79,4 +79,4 @@ void run_ble_scan()
     }
 }
 
-#endif // ENABLE_WINDOWS_WINRT
+#endif // WINDOWS_WINRT_ENABLED

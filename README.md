@@ -99,7 +99,7 @@ This template includes Windows Runtime (WinRT) support for modern Windows APIs:
 
 Example BLE usage:
 ```cpp
-#ifdef ENABLE_WINDOWS_WINRT
+#ifdef WINDOWS_WINRT_ENABLED
 #include "../include/ble.h"
 run_ble_scan();
 #endif
@@ -153,7 +153,7 @@ Edit `vcpkg.json` to include your project's specific dependencies:
 Enable/disable Windows-specific features in `CMakeLists.txt`:
 ```cmake
 # Enable WinRT for modern Windows APIs
-set(ENABLE_WINDOWS_WINRT ON)
+set(CMAKE_ENABLE_WINDOWS_WINRT ON)
 
 # Platform-specific source files
 if(WIN32)
@@ -234,7 +234,7 @@ This template demonstrates several Windows development patterns:
 
 **WinRT compilation errors:**
 - Confirm Visual Studio 2022 with C++/WinRT components installed
-- Check `ENABLE_WINDOWS_WINRT` is set to ON
+- Check `CMAKE_ENABLE_WINDOWS_WINRT` is set to ON
 
 **Missing dependencies:**
 - Run `vcpkg install` from the vcpkg directory

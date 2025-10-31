@@ -51,7 +51,7 @@ if(WIN32)
 endif()
 
 # BLE scanner using WinRT (Windows WinRT only)
-if(ENABLE_WINDOWS_WINRT)
+if(CMAKE_ENABLE_WINDOWS_WINRT)
     message(STATUS "Building BLE scanner with WinRT support")
     
     add_library(my_ble 

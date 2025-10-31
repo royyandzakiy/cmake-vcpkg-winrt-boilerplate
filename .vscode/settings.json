@@ -64,5 +64,6 @@
 		"variant": "cpp",
 		"xutility": "cpp",
 		"print": "cpp"
-	}
+	},
+	"iis.configDir": ""
 }

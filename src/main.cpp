@@ -3,7 +3,7 @@
 #include "../include/ports.h"
 #include "../include/calculator.h"
 
-#ifdef ENABLE_WINDOWS_WINRT
+#ifdef WINDOWS_WINRT_ENABLED
 #include "../include/ble.h"
 #endif
 
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     com_ports::run_com_ports();
 #endif
 
-#ifdef ENABLE_WINDOWS_WINRT
+#ifdef WINDOWS_WINRT_ENABLED
     run_ble_scan();
 #endif
 

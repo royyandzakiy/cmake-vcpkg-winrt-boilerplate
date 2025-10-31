@@ -18,12 +18,12 @@ endif()
 # =============================================================================
 # WinRT Configuration (OPTIONAL - Easy to remove completely)
 # =============================================================================
-option(ENABLE_WINDOWS_WINRT "Enable Windows WinRT support" ON) # Optional: Turn OFF if not using WinRT (or remove)
-message(STATUS "Windows WinRT support: ${ENABLE_WINDOWS_WINRT}")
+option(CMAKE_ENABLE_WINDOWS_WINRT "Enable Windows WinRT support" ON) # Optional: Turn OFF if not using WinRT (or remove)
+message(STATUS "Windows WinRT support: ${CMAKE_ENABLE_WINDOWS_WINRT}")
 
-if(ENABLE_WINDOWS_WINRT)
+if(CMAKE_ENABLE_WINDOWS_WINRT)
     find_package(cppwinrt CONFIG REQUIRED)
-    add_compile_definitions(ENABLE_WINDOWS_WINRT=1)
+    add_compile_definitions(WINDOWS_WINRT_ENABLED=1)
     message(STATUS "Building with Windows WinRT BLE support")
 endif()
 
@@ -84,6 +84,6 @@ if(WIN32)
 endif()
 
 # OPTIONAL: WinRT dependencies (remove if not using WinRT)
-if(ENABLE_WINDOWS_WINRT)
+if(CMAKE_ENABLE_WINDOWS_WINRT)
     target_link_libraries(${PROJECT_NAME} PRIVATE my_ble)
 endif()
